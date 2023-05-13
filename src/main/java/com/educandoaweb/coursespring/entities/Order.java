@@ -28,7 +28,7 @@ public class Order implements Serializable {
 	private Instant moment;
 	
 	private Integer orderStatus;
-
+	// CURIOSIDADE: embora orderStatus seja int, ele é exibido no JSON como enumerado
 	@ManyToOne
 	@JoinColumn(name = "client_id") // nome da chave estrageira referente ao usuario
 	private User client;

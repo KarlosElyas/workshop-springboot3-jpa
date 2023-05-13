@@ -16,8 +16,8 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "tb_user")
-public class User implements Serializable { // serialazabre permir trafegar os dados atraves da lan
-	private static final long serialVersionUID = 1L;
+public class User implements Serializable { // serialazabre permir trafegar os dados atraves da rede
+	private static final long serialVersionUID = 1L; // trafega como uma serie de caracteres.
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,7 +25,7 @@ public class User implements Serializable { // serialazabre permir trafegar os d
 	private String name, email, phone, password;
 	
 	@JsonIgnore
-	@OneToMany(mappedBy = "client") // define a dessa classe na order
+	@OneToMany(mappedBy = "client") // define a chave estrangeira dessa classe na order
 	// permite acessar os pedidos atraves do cliente(caso nao precise, nao se faz necessario seu uso)
 	
 	private List<Order> orders = new ArrayList<>();

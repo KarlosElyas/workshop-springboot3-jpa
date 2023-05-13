@@ -1,6 +1,7 @@
 package com.educandoaweb.coursespring.entities.enums;
 
 public enum OrderStatus {
+// IMPORTANTISSIMO!!!! Essa Tabela/Entidade NÃO existe no banco de dados, apenas existe o numero do ENUM
 
 	WAITING_PAYMENT(1),
 	PAID(2),
@@ -8,7 +9,7 @@ public enum OrderStatus {
 	DELIVERED(4),
 	CANCELED(5);
 	
-	private int code;
+	private int code; // necessario para que funcione os numeros
 
 	private OrderStatus(int code) {
 		this.code = code;
