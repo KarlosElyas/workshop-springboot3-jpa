@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Profile;
 import com.educandoaweb.coursespring.entities.Category;
 import com.educandoaweb.coursespring.entities.Order;
 import com.educandoaweb.coursespring.entities.OrderItem;
+import com.educandoaweb.coursespring.entities.Payment;
 import com.educandoaweb.coursespring.entities.Product;
 import com.educandoaweb.coursespring.entities.User;
 import com.educandoaweb.coursespring.entities.enums.OrderStatus;
@@ -87,6 +88,11 @@ public class TestConfig implements CommandLineRunner {
 		OrderItem oi4 = new OrderItem(o3, p5, 2, p5.getPrice());
 		
 		orderItemRepository.saveAll(Arrays.asList(oi1, oi2, oi3, oi4));
+		
+		Payment pay1 = new Payment(null, Instant.parse("2019-06-20T21:53:07Z"), o1);
+		o1.setPayment(pay1);
+		
+		orderRepository.save(o1); // o jpa ja vai criar o registro do pagamento e associalo
 		
 	}
 

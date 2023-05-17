@@ -14,7 +14,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
-@Entity
+@Entity // MAPEAMENTO objeto-relacional do JPA (ligação entre objetos OO e tabelas SQL)
 @Table(name = "tb_user")
 public class User implements Serializable { // serialazabre permir trafegar os dados atraves da rede
 	private static final long serialVersionUID = 1L; // trafega como uma serie de caracteres.
@@ -31,7 +31,7 @@ public class User implements Serializable { // serialazabre permir trafegar os d
 	private List<Order> orders = new ArrayList<>();
 	
 	public User() {
-	}
+	} // O SPRING necessita que todos as suas "entidades" possuam um construtor VAZIO
 
 	public User(Long id, String name, String email, String phone, String password) {
 		this.id = id;
