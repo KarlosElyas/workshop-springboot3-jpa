@@ -10,10 +10,12 @@ import org.springframework.context.annotation.Profile;
 
 import com.educandoaweb.coursespring.entities.Category;
 import com.educandoaweb.coursespring.entities.Order;
+import com.educandoaweb.coursespring.entities.OrderItem;
 import com.educandoaweb.coursespring.entities.Product;
 import com.educandoaweb.coursespring.entities.User;
 import com.educandoaweb.coursespring.entities.enums.OrderStatus;
 import com.educandoaweb.coursespring.repositories.CategoryRepository;
+import com.educandoaweb.coursespring.repositories.OrderItemRepository;
 import com.educandoaweb.coursespring.repositories.OrderRepository;
 import com.educandoaweb.coursespring.repositories.ProductRepository;
 import com.educandoaweb.coursespring.repositories.UserRepository;
@@ -33,6 +35,9 @@ public class TestConfig implements CommandLineRunner {
 
 	@Autowired
 	private ProductRepository productRepository;
+	
+	@Autowired
+	private OrderItemRepository orderItemRepository;
 
 	@Override
 	public void run(String... args) throws Exception { // metodo e executado assim que inicia a aplicacao
@@ -48,16 +53,20 @@ public class TestConfig implements CommandLineRunner {
 		Product p5 = new Product(null, "Rails for Dummies", "Cras fringilla convallis sem vel faucibus.", 100.99, "");
 
 		categoryRepository.saveAll(Arrays.asList(cat1, cat2, cat3));
-		productRepository.saveAll(Arrays.asList(p1, p2, p3, p4, p5)); // pode ser comentada
-		
-		//COMENTARIOS SÃO IMPORTANTES
-		// o SET que é uma collection ta sendo usado para não repetir categorias iguais dentro dele
+		productRepository.saveAll(Arrays.asList(p1, p2, p3, p4, p5));
+		// para a persistencia dos registros no banco, produto é salvo duas vezes para
+		// garantir
+		// que os registros referenciados na associação existam
+
+		// COMENTARIOS SÃO IMPORTANTES
+		// o SET que é uma collection ta sendo usado para não repetir categorias iguais
+		// dentro dele
 		p1.getCategories().add(cat2);
 		p2.getCategories().add(cat1);
 		p2.getCategories().add(cat3);
 		p3.getCategories().add(cat3);
 		p5.getCategories().add(cat2);
-		
+
 		productRepository.saveAll(Arrays.asList(p1, p2, p3, p4, p5));
 
 		User u1 = new User(null, "Maria Brown", "maria@gmail.com", "988888888", "123456");
@@ -70,6 +79,15 @@ public class TestConfig implements CommandLineRunner {
 
 		userRepository.saveAll(Arrays.asList(u1, u2));
 		orderRepository.saveAll(Arrays.asList(o1, o2, o3));
+
+		// ORDER = Pedido | ITEM = Produto
+		OrderItem oi1 = new OrderItem(o1, p1, 2, p1.getPrice()); // o preço é variavel, hoje ele é um, amanha ja mudou
+		OrderItem oi2 = new OrderItem(o1, p3, 1, p3.getPrice());
+		OrderItem oi3 = new OrderItem(o2, p3, 2, p3.getPrice());
+		OrderItem oi4 = new OrderItem(o3, p5, 2, p5.getPrice());
+		
+		orderItemRepository.saveAll(Arrays.asList(oi1, oi2, oi3, oi4));
+		
 	}
 
 }
