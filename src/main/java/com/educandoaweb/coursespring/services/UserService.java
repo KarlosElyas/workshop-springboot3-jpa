@@ -12,6 +12,8 @@ import com.educandoaweb.coursespring.entities.User;
 import com.educandoaweb.coursespring.repositories.UserRepository;
 import com.educandoaweb.coursespring.services.exceptions.DatabaseException;
 import com.educandoaweb.coursespring.services.exceptions.ResourceNotFoundException;
+
+import jakarta.persistence.EntityNotFoundException;
 											// Injeção de dependencia, acoplamento fraco
 @Service // registra como componente do spring e permite utilizar o @Autowired dessa classe nas demais.
 public class UserService {
@@ -44,9 +46,13 @@ public class UserService {
 	}
 	
 	public User update(Long id, User obj) {
-		User entity = repository.getReferenceById(id);
-		updateData(entity, obj);
-		return repository.save(entity);
+		try {
+			User entity = repository.getReferenceById(id);
+			updateData(entity, obj);
+			return repository.save(entity);
+		}catch (EntityNotFoundException e) {
+			throw new ResourceNotFoundException(id);
+		}
 	}
 	
 	private void updateData(User entity, User obj) {
