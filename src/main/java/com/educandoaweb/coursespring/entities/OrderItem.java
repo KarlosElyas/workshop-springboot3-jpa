@@ -31,7 +31,7 @@ public class OrderItem implements Serializable {
 		this.price = price;
 	}
 	
-	@JsonIgnore // para não ocorrer o loop desse orderitem chamar o json do order
+	@JsonIgnore // para não ocorrer o loop desse orderitem e chamar o json do order
 	public Order getOrder() {
 		return id.getOrder();
 	}
